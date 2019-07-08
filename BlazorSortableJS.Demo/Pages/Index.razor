@@ -1,0 +1,24 @@
+﻿@page "/"
+@inject IJSRuntime jSRuntime;
+<ul id="foo" class="list-group">
+    <li class="list-group-item" >foo 1</li>
+    <li class="list-group-item" >foo 2</li>
+    <li class="list-group-item" >foo 3</li>
+</ul>
+
+@code
+{
+bool FirstRun = true;
+protected async override Task OnAfterRenderAsync()
+{
+    if (FirstRun)
+    {
+        var test = new SortableJS(jSRuntime);
+        await test.Set("foo", new SortableJsOptions { group = "foo", animation = 100,
+            OnChoose = (e) => { Console.WriteLine(e.OldIndex); }
+
+        });
+    }
+
+}
+}

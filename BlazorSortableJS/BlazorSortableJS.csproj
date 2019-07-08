@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RazorLangVersion>3.0</RazorLangVersion>
+    <PackageId>BlazorSortableJs</PackageId>
+    <Version>1.0.0-preview6-1</Version>
+    <Authors>John J Bomhold</Authors>
+    <Title>Blazor SortableJs Wrapper</Title>
+    <Description>
+      This is a SortableJs wrapper for blazor
+    </Description>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/jbomhold3/BlazorDraggable</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jbomhold3/BlazorDraggable</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Copyright>John J Bomhold</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.0.0-preview6.19307.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\js\" />
+  </ItemGroup>
+
+</Project>
