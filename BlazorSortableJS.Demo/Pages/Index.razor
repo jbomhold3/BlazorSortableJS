@@ -3,21 +3,21 @@ Sortable List
 <SortableGroup Class="list-group" TItem="string" @ref="MyGroup">
     @foreach (var item in @MyGroup.Sortable.GetRaw())
     {
-        <SortableItem Class="list-group-item" Item="item" TItem="string">@item.Data</SortableItem>
+    <SortableItem Class="list-group-item" Item="item" TItem="string">@item.Data</SortableItem>
     }
 </SortableGroup>
 Same Group
 <SortableGroup Class="list-group" TItem="string" @ref="My2Group">
     @foreach (var item in @My2Group.Sortable.GetRaw())
     {
-        <SortableItem Class="list-group-item" Item="item" TItem="string">@item.Data</SortableItem>
+    <SortableItem Class="list-group-item" Item="item" TItem="string">@item.Data</SortableItem>
     }
 </SortableGroup>
 Resulting Data
 <ul class="list-group">
     @foreach (var item in resultsList)
     {
-        <li class="list-group-item">@item</li>
+    <li class="list-group-item">@item</li>
     }
 </ul>
 
