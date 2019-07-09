@@ -9,7 +9,7 @@ namespace BlazorSortableJS
 {
     public class SortableJSSortItem<T>
     {
-        public int DataId { get; set; }
+        public string DataId { get; set; }
         public T Data { get; set; }
 }
 }

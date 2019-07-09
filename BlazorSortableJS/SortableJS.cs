@@ -5,15 +5,21 @@ using System.Threading.Tasks;
 using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Components;
 using System.Linq;
-
+using System.Text.Json.Serialization;
 namespace BlazorSortableJS
 {
     public class SortableJS<T> : IAsyncDisposable
     {
-
         private readonly IJSRuntime _jSRuntime;
         private SortableJsOptions _opt { get; set; }
+        public EventHandler OnDataSet { get; set; }
         private Guid _refId { get; set; }
+
+        public Guid RefId
+        {
+            get { return _refId;}
+        }
+        private string _elId { get; set; }
         private List<SortableJSSortItem<T>> _list { get; set; } = new List<SortableJSSortItem<T>>();
 
         public List<SortableJSSortItem<T>> GetRaw()
@@ -29,7 +35,7 @@ namespace BlazorSortableJS
         public async Task Create(string elId, SortableJsOptions opt)
         {
             _opt = opt;
-
+            _elId = elId;
             await _jSRuntime?.InvokeAsync<object>("BlazorSortableJS.Create", _refId, elId, opt.RemoveNulls());
 
             //Register to all Events
@@ -48,22 +54,22 @@ namespace BlazorSortableJS
         }
         public void SetData(List<T> list)
         {
-            var i = 0;
             foreach (var item in list)
             {
-                _list.Add(new SortableJSSortItem<T>() { Data = item, DataId = i });
-                i++;
+                _list.Add(new SortableJSSortItem<T>() { Data = item, DataId = Guid.NewGuid().ToString() });
             }
+            OnDataSet?.Invoke(new object(), new EventArgs());
         }
         public async Task<List<T>> GetData()
         {
-            int[] indexs = Array.ConvertAll(await ToArray(), s => int.Parse(s));  ;
-            var order = indexs.ToList();
-            var temp = order.Select(i => _list[i]).ToList();
+
+            var indexs = await ToArray() ;
+            //var order = indexs.ToList();
+            //var temp = order.Select(i => _list[i]).ToList();
             var result = new List<T>();
-            foreach(var item in temp)
+            foreach (var index in indexs)
             {
-                result.Add(item.Data);
+                result.Add(_list.First(q => q.DataId == index).Data);
             }
             return result;
         }
@@ -81,7 +87,7 @@ namespace BlazorSortableJS
         public Task Distroy()
         {
             if (_refId == default) throw new InvalidOperationException("Create Function must be called first");
-            return _jSRuntime?.InvokeAsync<object>("BlazorSortableJS.Distroy", _refId);
+            return _jSRuntime?.InvokeAsync<object>("BlazorSortableJS.Destroy", _refId);
         }
         public void Dispose()
         {
@@ -102,7 +108,9 @@ namespace BlazorSortableJS
         public void OnChoose(object sender, SortableJSEvent data)
         {
             if (Guid.Parse(sender.ToString()) != _refId) return;
+            _jSRuntime?.InvokeAsync<object>("BlazorSortableJS.SetChoiceItem", _refId, JsonSerializer.ToString(_list.First(q => q.DataId == data.DataId).Data).Replace("\"", ""));
             _opt.OnChoose?.Invoke(data);
+            Console.WriteLine(data.DataId);
         }
         public void OnUnchoose(object sender, SortableJSEvent data)
         {
@@ -122,6 +130,15 @@ namespace BlazorSortableJS
         public void OnAdd(object sender, SortableJSEvent data)
         {
             if (Guid.Parse(sender.ToString()) != _refId) return;
+            try
+            {
+                var newItem = JsonSerializer.Parse<T>(data.Data);
+                _list.Add(new SortableJSSortItem<T>() { DataId = data.DataId, Data = newItem });
+            }
+            catch
+            {
+                Console.WriteLine("Warning could not parse item");
+            }
             _opt.OnAdd?.Invoke(data);
         }
         public void OnUpdate(object sender, SortableJSEvent data)
@@ -134,10 +151,14 @@ namespace BlazorSortableJS
             if (Guid.Parse(sender.ToString()) != _refId) return;
             _opt.OnSort?.Invoke(data);
         }
-        public void OnRemove(object sender, SortableJSEvent data)
+
+        public async void OnRemove(object sender, SortableJSEvent data)
         {
+            // DO NOT remove items from _list here. SortableJS will remove the index
+            // Getdata will only return the indexs SortableJS provides it.
             if (Guid.Parse(sender.ToString()) != _refId) return;
             _opt.OnRemove?.Invoke(data);
+
         }
         public void OnFilter(object sender, SortableJSEvent data)
         {

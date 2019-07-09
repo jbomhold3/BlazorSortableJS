@@ -1,0 +1,32 @@
+@inherits DynamicComponentBase
+@typeparam TItem
+@if (Item != null)
+{
+    <DynamicElement Attributes="@UnknownParameters" TagName="@Tag" class="@Class" @onclick="@OnClick" Id="@Id" data-id="@Item.DataId">
+        @ChildContent
+    </DynamicElement>
+}
+@code {
+    [Parameter] private string Id { get; set; }
+    [Parameter] private string Class { get; set; }
+    [Parameter] private string Style { get; set; }
+    [Parameter] private bool IsDiv { get; set; }
+    [Parameter] private RenderFragment ChildContent { get; set; }
+    [Parameter] private EventCallback<UIMouseEventArgs> OnClick { get; set; }
+    [Parameter] private SortableJSSortItem<TItem> Item { get; set; }
+    [CascadingParameter] private SortableJS<TItem> Sortable { get; set; }
+
+
+    string Tag
+    {
+        get
+        {
+            return (IsDiv) ? "div" : "li";
+        }
+    }
+
+    protected override Task OnAfterRenderAsync()
+    {
+        return base.OnAfterRenderAsync();
+    }
+}

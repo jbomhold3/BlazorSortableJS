@@ -1,0 +1,45 @@
+@inherits DynamicComponentBase
+@typeparam TItem
+@inject IJSRuntime jSRuntime;
+<CascadingValue Value="@Sortable">
+    <DynamicElement Attributes="@UnknownParameters" TagName="@Tag" class="@Class" @onclick="@OnClick" Id="@Id" data-refId="@Sortable.RefId">
+      @ChildContent
+    </DynamicElement>
+</CascadingValue>
+@code {
+    [Parameter] public string Id { get; set; }
+    [Parameter] private string Class { get; set; }
+    [Parameter] private string Style { get; set; }
+    [Parameter] private bool IsDiv { get; set; }
+    [Parameter] private RenderFragment ChildContent { get; set; }
+    [Parameter] private EventCallback<UIMouseEventArgs> OnClick { get; set; }
+    public SortableJS<TItem> Sortable { get; set; }
+    private bool FirstRun = true;
+
+    //    List<SortableJSSortItem<string>> rawList { get; set; } = new List<SortableJSSortItem<string>>();
+    private string Tag
+    {
+        get
+        {
+            return (IsDiv) ? "div" : "ul";
+        }
+    }
+
+    protected override Task OnInitAsync()
+    {
+    
+        if (Id == null)
+            Id = Guid.NewGuid().ToString();
+        Sortable = new SortableJS<TItem>(jSRuntime);
+        return base.OnInitAsync();
+    }
+    protected override Task OnAfterRenderAsync()
+    {
+        if (FirstRun)
+        {
+            FirstRun = false;
+
+        }
+        return base.OnAfterRenderAsync();
+    }
+}
