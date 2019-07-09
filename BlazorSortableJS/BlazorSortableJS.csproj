@@ -12,11 +12,15 @@
     </Description>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/jbomhold3/BlazorDraggable</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/jbomhold3/BlazorDraggable</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/jbomhold3/BlazorSortableJS</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jbomhold3/BlazorSortableJS</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Copyright>John J Bomhold</Copyright>
   </PropertyGroup>
+
+  <ItemGroup>
+   
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.0.0-preview6.19307.2" />
@@ -25,5 +29,20 @@
   <ItemGroup>
     <Folder Include="wwwroot\js\" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Content Remove="package-lock.json" />
+    <Content Remove="package.json" />
+    <Content Remove="tsconfig.json" />
+    <Content Remove="src\**" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="package-lock.json" />
+    <None Include="package.json" />
+    <None Include="tsconfig.json" />
+ 
+  </ItemGroup>
+
 
 </Project>

@@ -18,40 +18,34 @@ Resulting Data
 
 @code
 {
-SortableJS<string> Sortable { get; set; }
-bool FirstRun = true;
-List<string> items { get; set; } = new List<string> { "test", "hello", "getoveryourself" };
-List<SortableJSSortItem<string>> rawList { get; set; } = new List<SortableJSSortItem<string>>();
-List<string> resultsList { get; set; } = new List<string>();
+    bool FirstRun = true;
+    SortableJS<string> Sortable { get; set; }
+    List<string> items { get; set; } = new List<string> { "test", "hello", "getoveryourself" };
+    List<SortableJSSortItem<string>> rawList { get; set; } = new List<SortableJSSortItem<string>>();
+    List<string> resultsList { get; set; } = new List<string>();
 
-protected override Task OnInitAsync()
-{
-    resultsList = items;
-    return base.OnInitAsync();
-}
-
-protected async override Task OnAfterRenderAsync()
-{
-    if (FirstRun)
+    protected override Task OnInitAsync()
     {
-         Sortable = new SortableJS<string>(jSRuntime);
-        Sortable.SetData(items);
-        rawList = Sortable.GetRaw();
-
-        await Sortable.Create("foo", new SortableJsOptions
-        {
-            group = "foo",
-            animation = 100,
-            OnSort = async (e) => await Update()
-        });
-        FirstRun = false;
-        StateHasChanged();
+        resultsList = items;
+        return base.OnInitAsync();
     }
-}
 
-private async Task Update()
-{
-    resultsList = await Sortable.GetData(); StateHasChanged();
-}
+    protected async override Task OnAfterRenderAsync()
+    {
+        if (FirstRun)
+        {
+            Sortable = new SortableJS<string>(jSRuntime);
+            Sortable.SetData(items);
+            rawList = Sortable.GetRaw();
 
+            await Sortable.Create("foo", new SortableJsOptions
+            {
+                group = "foo",
+                animation = 100,
+                OnSort = async (e) => { await Sortable.GetData(); StateHasChanged()}
+            });
+            FirstRun = false;
+            StateHasChanged();
+        }
+    }
 }
