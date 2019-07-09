@@ -45,7 +45,6 @@ Sortable List
             {
                 group = "test",
                 animation = 100,
-            //    OnSort = async (e) => { resultsList = await MyGroup.Sortable.GetData(); StateHasChanged(); }
             });         
             FirstRun = false;
             StateHasChanged();
