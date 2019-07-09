@@ -88,6 +88,7 @@
 /* 0 */
 /***/ (function(module, exports) {
 
+let SortableLists = [];
 let whitelist = ["id", "tagName", "className", "childNodes"];
 const domWindow = window;
 const namespace = "BlazorSortableJS";
@@ -114,8 +115,9 @@ function GetSafeEventArgs(refId, e, x = {}) {
     return result;
 }
 domWindow.BlazorSortableJS = { SortableJs: Function };
-domWindow.BlazorSortableJS.SortableJs = (refId, elId, opt) => {
+domWindow.BlazorSortableJS.Create = (refId, elId, opt) => {
     var el = document.getElementById(elId);
+    console.log(refId);
     opt.onChoose = (e) => DotNet.invokeMethodAsync(namespace, "OnChoose", GetSafeEventArgs(refId, e));
     opt.onUnchoose = (e) => DotNet.invokeMethodAsync(namespace, "OnUnchoose", GetSafeEventArgs(refId, e));
     opt.onStart = (e) => DotNet.invokeMethodAsync(namespace, "OnStart", GetSafeEventArgs(refId, e));
@@ -127,7 +129,18 @@ domWindow.BlazorSortableJS.SortableJs = (refId, elId, opt) => {
     opt.onMove = (e) => DotNet.invokeMethodAsync(namespace, "OnMove", GetSafeEventArgs(refId, e));
     opt.onClone = (e) => DotNet.invokeMethodAsync(namespace, "OnClone", GetSafeEventArgs(refId, e));
     opt.onChange = (e) => DotNet.invokeMethodAsync(namespace, "OnChange", GetSafeEventArgs(refId, e));
-    Sortable.create(el, opt);
+    SortableLists[refId] = Sortable.create(el, opt);
+};
+domWindow.BlazorSortableJS.ToArray = (refId) => {
+    return SortableLists[refId].toArray();
+};
+domWindow.BlazorSortableJS.Sort = (refId, order) => {
+    return SortableLists[refId].sort(order);
+};
+domWindow.BlazorSortableJS.Destroy = (refId, order) => {
+    SortableLists[refId].destroy();
+    var index = SortableLists.indexOf(SortableLists[refId]);
+    SortableLists.splice(index, 1);
 };
 
 

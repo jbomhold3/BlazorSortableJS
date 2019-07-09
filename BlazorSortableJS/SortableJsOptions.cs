@@ -31,7 +31,7 @@ namespace BlazorSortableJS
         //  store: null,  // @see Store
         public double? animation { get; set; }
         public string easing { get; set; }
-        
+
         public string dataIdAttr { get; set; } 
         public bool? forceFallback { get; set; } 
 

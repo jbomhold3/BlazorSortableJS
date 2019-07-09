@@ -1,24 +1,57 @@
 ﻿@page "/"
 @inject IJSRuntime jSRuntime;
+Sortable List
 <ul id="foo" class="list-group">
-    <li class="list-group-item" >foo 1</li>
-    <li class="list-group-item" >foo 2</li>
-    <li class="list-group-item" >foo 3</li>
+    @foreach (var item in rawList)
+    {
+        <li class="list-group-item" data-id="@item.DataId">@item.Data</li>
+    }
+</ul>
+
+Resulting Data
+<ul class="list-group">
+    @foreach (var item in resultsList)
+    {
+        <li class="list-group-item">@item</li>
+    }
 </ul>
 
 @code
 {
+SortableJS<string> Sortable { get; set; }
 bool FirstRun = true;
+List<string> items { get; set; } = new List<string> { "test", "hello", "getoveryourself" };
+List<SortableJSSortItem<string>> rawList { get; set; } = new List<SortableJSSortItem<string>>();
+List<string> resultsList { get; set; } = new List<string>();
+
+protected override Task OnInitAsync()
+{
+    resultsList = items;
+    return base.OnInitAsync();
+}
+
 protected async override Task OnAfterRenderAsync()
 {
     if (FirstRun)
     {
-        var test = new SortableJS(jSRuntime);
-        await test.Set("foo", new SortableJsOptions { group = "foo", animation = 100,
-            OnChoose = (e) => { Console.WriteLine(e.OldIndex); }
+         Sortable = new SortableJS<string>(jSRuntime);
+        Sortable.SetData(items);
+        rawList = Sortable.GetRaw();
 
+        await Sortable.Create("foo", new SortableJsOptions
+        {
+            group = "foo",
+            animation = 100,
+            OnSort = async (e) => await Update()
         });
+        FirstRun = false;
+        StateHasChanged();
     }
-
 }
+
+private async Task Update()
+{
+    resultsList = await Sortable.GetData(); StateHasChanged();
+}
+
 }
