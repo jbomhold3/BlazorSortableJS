@@ -13,32 +13,21 @@ This is a very early project. However, it does function and is very much usable.
 <script src="_content/BlazorSortableJs/js/BlazorSortableJs.js"></script>
 ```
 -  Usage
-``` c#
-@inject IJSRuntime jSRuntime;
-```
 ``` html
 Sortable List
-<ul id="foo" class="list-group">
-    @foreach (var item in rawList)
+<SortableGroup Class="list-group" TItem="string" @ref="MyGroup">
+    @foreach (var item in @MyGroup.Sortable.GetRaw())
     {
-        <li class="list-group-item" data-id="@item.DataId">@item.Data</li>
+        <SortableItem Class="list-group-item" Item="item" TItem="string">@item.Data</SortableItem>
     }
-</ul>
-Resulting Data
-<ul class="list-group">
-    @foreach (var item in resultsList)
-    {
-        <li class="list-group-item">@item</li>
-    }
-</ul>
+</SortableGroup>
 ```    
 ``` c#
 @code
 {
+    SortableGroup<string> MyGroup;
     bool FirstRun = true;
-    SortableJS<string> Sortable { get; set; }
-    List<string> items { get; set; } = new List<string> { "test", "hello", "getoveryourself" };
-    List<SortableJSSortItem<string>> rawList { get; set; } = new List<SortableJSSortItem<string>>();
+    List<string> items { get; set; } = new List<string> { "T1", "T2", "T3" };
     List<string> resultsList { get; set; } = new List<string>();
 
     protected override Task OnInitAsync()
@@ -51,16 +40,13 @@ Resulting Data
     {
         if (FirstRun)
         {
-            Sortable = new SortableJS<string>(jSRuntime);
-            Sortable.SetData(items);
-            rawList = Sortable.GetRaw();
-
-            await Sortable.Create("foo", new SortableJsOptions
+            MyGroup.Sortable.SetData(items);
+            await MyGroup.Sortable.Create(MyGroup.Id, new SortableJsOptions
             {
-                group = "foo",
+                group = "test",
                 animation = 100,
-                OnSort = async (e) => { await Sortable.GetData(); StateHasChanged()}
-            });
+            //    OnSort = async (e) => { resultsList = await MyGroup.Sortable.GetData(); StateHasChanged(); }
+            });         
             FirstRun = false;
             StateHasChanged();
         }
