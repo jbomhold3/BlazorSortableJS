@@ -117,11 +117,10 @@ function GetSafeEventArgs(refId, e, x = {}) {
     return result;
 }
 function GetSafeAddEventArgs(refId, e) {
-    console.log(e);
     var result = {
         refId: refId || "",
         dataId: (e.item) ? e.item['dataset']['id'] || "-1" : e.dragged['dataset']['id'],
-        data: SortableLists[e.from['refId']]['ChoiceItem'] || "",
+        data: SortableLists[e.from['dataset']['refid']]['ChoiceItem'] || "",
         item: JSON.stringify(e.item, whitelist),
         to: JSON.stringify(e.to, whitelist),
         from: JSON.stringify(e.from, whitelist),

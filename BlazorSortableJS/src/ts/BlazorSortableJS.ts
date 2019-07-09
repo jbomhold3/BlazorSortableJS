@@ -32,12 +32,10 @@ function GetSafeEventArgs(refId: string, e: any, x: any = {}) {
 }
 
 function GetSafeAddEventArgs(refId: string, e: any) {
-    console.log(e);
     var result = {
-
         refId: refId || "",
         dataId: (e.item) ? e.item['dataset']['id'] || "-1" : e.dragged['dataset']['id'],
-        data: SortableLists[e.from['refId']]['ChoiceItem'] || "",
+        data: SortableLists[e.from['dataset']['refid']]['ChoiceItem'] || "",
         item: JSON.stringify(e.item, whitelist),
         to: JSON.stringify(e.to, whitelist),
         from: JSON.stringify(e.from, whitelist),
@@ -62,7 +60,7 @@ domWindow.BlazorSortableJS.Create = (refId:string, elId: string, opt: IBlazorSor
     opt.onUnchoose = (e: any) => DotNet.invokeMethodAsync(namespace, "OnUnchoose", GetSafeEventArgs(refId,e));
     opt.onStart = (e: any) => DotNet.invokeMethodAsync(namespace, "OnStart", GetSafeEventArgs(refId,e));
     opt.onEnd = (e: any) => DotNet.invokeMethodAsync(namespace, "OnEnd", GetSafeEventArgs(refId,e));
-    opt.onAdd = (e: any) => { DotNet.invokeMethodAsync(namespace, "OnAdd", GetSafeAddEventArgs(refId, e)); };
+    opt.onAdd = (e: any) => { DotNet.invokeMethodAsync(namespace, "OnAdd", GetSafeAddEventArgs(refId, e) ); };
     opt.onSort = (e: any) => DotNet.invokeMethodAsync(namespace, "OnSort", GetSafeEventArgs(refId,e));
     opt.onRemove = (e: any) => DotNet.invokeMethodAsync(namespace, "OnRemove", GetSafeEventArgs(refId,e));
     opt.onFilter = (e: any) => DotNet.invokeMethodAsync(namespace, "OnFilter", GetSafeEventArgs(refId,e));

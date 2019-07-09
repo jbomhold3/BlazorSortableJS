@@ -10,6 +10,7 @@ namespace BlazorSortableJS
     public class SortableJSSortItem<T>
     {
         public string DataId { get; set; }
+        public bool Show { get; set; } = true;
         public T Data { get; set; }
 }
 }

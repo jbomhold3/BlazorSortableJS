@@ -24,7 +24,8 @@ namespace BlazorSortableJS
 
         public List<SortableJSSortItem<T>> GetRaw()
         {
-            return _list;
+
+            return _list.Where(q => q.Show == true).ToList();
         }
 
         public SortableJS(IJSRuntime jsRuntime)
@@ -89,6 +90,11 @@ namespace BlazorSortableJS
             if (_refId == default) throw new InvalidOperationException("Create Function must be called first");
             return _jSRuntime?.InvokeAsync<object>("BlazorSortableJS.Destroy", _refId);
         }
+        public void Add(string dataId, string data)
+        {
+            var newItem = JsonSerializer.Parse<T>(data);
+            _list.Add(new SortableJSSortItem<T>() { DataId = dataId, Data = newItem, Show = false});
+        }
         public void Dispose()
         {
             SortableJSEventHandler.OnChooseEvent -= OnChoose;
@@ -108,7 +114,7 @@ namespace BlazorSortableJS
         public void OnChoose(object sender, SortableJSEvent data)
         {
             if (Guid.Parse(sender.ToString()) != _refId) return;
-            _jSRuntime?.InvokeAsync<object>("BlazorSortableJS.SetChoiceItem", _refId, JsonSerializer.ToString(_list.First(q => q.DataId == data.DataId).Data).Replace("\"", ""));
+            _jSRuntime?.InvokeAsync<object>("BlazorSortableJS.SetChoiceItem", _refId, _list.First(q => q.DataId == data.DataId).Data);
             _opt.OnChoose?.Invoke(data);
             Console.WriteLine(data.DataId);
         }
@@ -130,15 +136,9 @@ namespace BlazorSortableJS
         public void OnAdd(object sender, SortableJSEvent data)
         {
             if (Guid.Parse(sender.ToString()) != _refId) return;
-            try
-            {
-                var newItem = JsonSerializer.Parse<T>(data.Data);
-                _list.Add(new SortableJSSortItem<T>() { DataId = data.DataId, Data = newItem });
-            }
-            catch
-            {
-                Console.WriteLine("Warning could not parse item");
-            }
+            var json = JsonSerializer.ToString(data.Data);
+            Add(data.DataId,json);
+         
             _opt.OnAdd?.Invoke(data);
         }
         public void OnUpdate(object sender, SortableJSEvent data)

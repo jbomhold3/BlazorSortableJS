@@ -8,7 +8,7 @@ namespace BlazorSortableJS
     {
         public Guid RefId { get; set; }
         public string DataId { get; set; }
-        public string Data { get;set;}
+        public object Data { get;set;}
         public object Item { get; set; }
         public object To { get; set; }
         public object From { get; set; }
