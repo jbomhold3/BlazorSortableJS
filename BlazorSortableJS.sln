@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29021.104
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorSortableJS", "BlazorSortableJS\BlazorSortableJS.csproj", "{8BE2CC95-4A2F-4B87-98C2-65DF23E69672}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorSortableJS", "src\BlazorSortableJS\BlazorSortableJS.csproj", "{92031AD6-E22D-4A7E-8B0B-AD001684ABEB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorSortableJS.Demo", "BlazorSortableJS.Demo\BlazorSortableJS.Demo.csproj", "{FBBB3CCA-08A3-4665-8AC1-29B76A792390}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoCore", "src\BlazorSortableJS.DemoCore\DemoCore.csproj", "{1B52A978-9529-4E19-8F34-B8E62FE0A44B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoCSB", "src\BlazorSortableJS.DemoCSB\DemoCSB.csproj", "{8A15CE7A-2AB6-403A-9A5F-33067146AACB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoSSB", "src\BlazorSortableJS.DemoSSB\DemoSSB.csproj", "{62A9C0D6-6D3A-4DF3-AB9A-BCF188CE2157}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +17,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8BE2CC95-4A2F-4B87-98C2-65DF23E69672}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8BE2CC95-4A2F-4B87-98C2-65DF23E69672}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8BE2CC95-4A2F-4B87-98C2-65DF23E69672}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8BE2CC95-4A2F-4B87-98C2-65DF23E69672}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FBBB3CCA-08A3-4665-8AC1-29B76A792390}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FBBB3CCA-08A3-4665-8AC1-29B76A792390}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FBBB3CCA-08A3-4665-8AC1-29B76A792390}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FBBB3CCA-08A3-4665-8AC1-29B76A792390}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92031AD6-E22D-4A7E-8B0B-AD001684ABEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92031AD6-E22D-4A7E-8B0B-AD001684ABEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92031AD6-E22D-4A7E-8B0B-AD001684ABEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92031AD6-E22D-4A7E-8B0B-AD001684ABEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B52A978-9529-4E19-8F34-B8E62FE0A44B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B52A978-9529-4E19-8F34-B8E62FE0A44B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B52A978-9529-4E19-8F34-B8E62FE0A44B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B52A978-9529-4E19-8F34-B8E62FE0A44B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A15CE7A-2AB6-403A-9A5F-33067146AACB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A15CE7A-2AB6-403A-9A5F-33067146AACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A15CE7A-2AB6-403A-9A5F-33067146AACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A15CE7A-2AB6-403A-9A5F-33067146AACB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62A9C0D6-6D3A-4DF3-AB9A-BCF188CE2157}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62A9C0D6-6D3A-4DF3-AB9A-BCF188CE2157}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62A9C0D6-6D3A-4DF3-AB9A-BCF188CE2157}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62A9C0D6-6D3A-4DF3-AB9A-BCF188CE2157}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

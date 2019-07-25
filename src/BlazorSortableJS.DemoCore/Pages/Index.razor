@@ -1,0 +1,62 @@
+﻿@page "/"
+Sortable List
+<SortableGroup Class="list-group" TItem="string" @ref="MyGroup">
+    @foreach (var item in @MyGroup.Sortable.GetRaw())
+    {
+        <SortableItem Class="list-group-item" Item="item" TItem="string">@item.Data</SortableItem>
+    }
+</SortableGroup>
+Same Group
+<SortableGroup Class="list-group" TItem="string" @ref="My2Group">
+    @foreach (var item in @My2Group.Sortable.GetRaw())
+    {
+        <SortableItem Class="list-group-item" Item="item" TItem="string">@item.Data</SortableItem>
+    }
+</SortableGroup>
+Resulting Data
+<ul class="list-group">
+    @foreach (var item in resultsList)
+    {
+        <li class="list-group-item">@item</li>
+    }
+</ul>
+
+@code
+{
+    SortableGroup<string> MyGroup;
+    SortableGroup<string> My2Group;
+    bool FirstRun = true;
+    List<string> items { get; set; } = new List<string> { "T1", "T2", "T3" };
+    List<string> items2 { get; set; } = new List<string> { "T4", "T5", "T6" };
+    List<string> resultsList { get; set; } = new List<string>();
+
+    protected override Task OnInitAsync()
+    {
+        resultsList = items;
+        return base.OnInitAsync();
+    }
+
+    protected async override Task OnAfterRenderAsync()
+    {
+        if (FirstRun)
+        {
+            MyGroup.Sortable.SetData(items);
+            await MyGroup.Sortable.Create(MyGroup.Id, new SortableJsOptions
+            {
+                group = "test",
+                animation = 100,
+                //    OnSort = async (e) => { resultsList = await MyGroup.Sortable.GetData(); StateHasChanged(); }
+            });
+
+            My2Group.Sortable.SetData(items2);
+            await My2Group.Sortable.Create(My2Group.Id, new SortableJsOptions
+            {
+                group = "test",
+                animation = 100,
+                OnSort = async (e) => { resultsList = await My2Group.Sortable.GetData(); StateHasChanged(); }
+            });
+            FirstRun = false;
+            StateHasChanged();
+        }
+    }
+}

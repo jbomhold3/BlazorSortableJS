@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RazorLangVersion>3.0</RazorLangVersion>
+    <PackageId>BlazorSortableJs</PackageId>
+    <Version>1.0.0-preview7-01</Version>
+    <Authors>John J Bomhold</Authors>
+    <Title>Blazor SortableJs Wrapper</Title>
+    <Description>
+      This is a SortableJs wrapper for blazor
+    </Description>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/jbomhold3/BlazorSortableJS</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jbomhold3/BlazorSortableJS</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Copyright>John J Bomhold</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.0.0-preview7.19365.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\js\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Remove="package-lock.json" />
+    <Content Remove="package.json" />
+    <Content Remove="tsconfig.json" />
+    <Content Remove="src\**" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="package-lock.json" />
+    <None Include="package.json" />
+    <None Include="tsconfig.json" />
+ 
+  </ItemGroup>
+
+
+</Project>
