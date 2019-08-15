@@ -8,11 +8,11 @@
 </CascadingValue>
 @code {
     [Parameter] public string Id { get; set; }
-    [Parameter] private string Class { get; set; }
-    [Parameter] private string Style { get; set; }
-    [Parameter] private bool IsDiv { get; set; }
-    [Parameter] private RenderFragment ChildContent { get; set; }
-    [Parameter] private EventCallback<UIMouseEventArgs> OnClick { get; set; }
+    [Parameter] public string Class { get; set; }
+    [Parameter] public string Style { get; set; }
+    [Parameter] public bool IsDiv { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public EventCallback<UIMouseEventArgs> OnClick { get; set; }
     public SortableJS<TItem> Sortable { get; set; }
     private bool FirstRun = true;
 
@@ -25,13 +25,13 @@
         }
     }
 
-    protected override Task OnInitAsync()
+    protected override Task OnInitializedAsync()
     {
     
          if (Id == null)
             Id = Guid.NewGuid().ToString();
         Sortable = new SortableJS<TItem>(jSRuntime);
-        return base.OnInitAsync();
+        return base.OnInitializedAsync();
     }
     protected override Task OnAfterRenderAsync()
     {

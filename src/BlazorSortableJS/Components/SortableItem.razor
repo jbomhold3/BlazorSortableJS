@@ -7,14 +7,14 @@
     </DynamicElement>
 }
 @code {
-    [Parameter] private string Id { get; set; }
-    [Parameter] private string Class { get; set; }
-    [Parameter] private string Style { get; set; }
-    [Parameter] private bool IsDiv { get; set; }
-    [Parameter] private RenderFragment ChildContent { get; set; }
-    [Parameter] private EventCallback<UIMouseEventArgs> OnClick { get; set; }
-    [Parameter] private SortableJSSortItem<TItem> Item { get; set; }
-    [CascadingParameter] private SortableJS<TItem> Sortable { get; set; }
+    [Parameter] public string Id { get; set; }
+    [Parameter] public string Class { get; set; }
+    [Parameter] public string Style { get; set; }
+    [Parameter] public bool IsDiv { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public EventCallback<UIMouseEventArgs> OnClick { get; set; }
+    [Parameter] public SortableJSSortItem<TItem> Item { get; set; }
+    [CascadingParameter] public SortableJS<TItem> Sortable { get; set; }
 
 
     string Tag

@@ -1,13 +1,13 @@
 ﻿@page "/"
 Sortable List
-<SortableGroup Class="list-group" TItem="string" @ref="MyGroup">
+<SortableGroup Class="list-group" TItem="string" @ref="MyGroup" @ref:suppressField>
     @foreach (var item in @MyGroup.Sortable.GetRaw())
     {
         <SortableItem Class="list-group-item" Item="item" TItem="string">@item.Data</SortableItem>
     }
 </SortableGroup>
 Same Group
-<SortableGroup Class="list-group" TItem="string" @ref="My2Group">
+<SortableGroup Class="list-group" TItem="string" @ref="My2Group" @ref:suppressField> 
     @foreach (var item in @My2Group.Sortable.GetRaw())
     {
         <SortableItem Class="list-group-item" Item="item" TItem="string">@item.Data</SortableItem>
@@ -30,10 +30,10 @@ Resulting Data
     List<string> items2 { get; set; } = new List<string> { "T4", "T5", "T6" };
     List<string> resultsList { get; set; } = new List<string>();
 
-    protected override Task OnInitAsync()
+    protected override Task OnInitializedAsync()
     {
         resultsList = items;
-        return base.OnInitAsync();
+        return base.OnInitializedAsync();
     }
 
     protected async override Task OnAfterRenderAsync()

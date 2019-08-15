@@ -152,7 +152,7 @@ namespace BlazorSortableJS
             _opt.OnSort?.Invoke(data);
         }
 
-        public async void OnRemove(object sender, SortableJSEvent data)
+        public void OnRemove(object sender, SortableJSEvent data)
         {
             // DO NOT remove items from _list here. SortableJS will remove the index
             // Getdata will only return the indexs SortableJS provides it.

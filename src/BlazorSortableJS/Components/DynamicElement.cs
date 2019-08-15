@@ -14,9 +14,9 @@ namespace BlazorSortableJS.Components
         [Parameter] public string TagName { get; set; }
 
 
-        [Parameter] private RenderFragment ChildContent { get; set; }
+        [Parameter] public RenderFragment ChildContent { get; set; }
         [Parameter(CaptureUnmatchedValues = true)]
-        private IDictionary<string, object> MyParams { get; set; }
+        public IDictionary<string, object> MyParams { get; set; }
 
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {

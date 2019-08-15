@@ -8,6 +8,6 @@ namespace BlazorSortableJS.Components
 {
     public abstract class DynamicComponentBase : ComponentBase
     {
-        [Parameter(CaptureUnmatchedValues = true)] protected IDictionary<string, object> UnknownParameters { get; set; }
+        [Parameter(CaptureUnmatchedValues = true)] public IDictionary<string, object> UnknownParameters { get; set; }
     }
 }
