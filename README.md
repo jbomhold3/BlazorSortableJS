@@ -30,10 +30,10 @@ Sortable List
     List<string> items { get; set; } = new List<string> { "T1", "T2", "T3" };
     List<string> resultsList { get; set; } = new List<string>();
 
-    protected override Task OnInitAsync()
+    protected override Task OnInitializedAsync()
     {
         resultsList = items;
-        return base.OnInitAsync();
+        return base.OnInitializedAsync();
     }
 
     protected async override Task OnAfterRenderAsync()
