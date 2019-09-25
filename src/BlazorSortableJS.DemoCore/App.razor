@@ -2,4 +2,14 @@
     Configuring this here is temporary. Later we'll move the app config
     into Program.cs, and it won't be necessary to specify AppAssembly.
 -->
-<Router AppAssembly="typeof(DemoCore.App).Assembly" />
+    <Router AppAssembly="typeof(DemoCore.App).Assembly">
+        <Found Context="routeData">
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"></RouteView>
+        </Found>
+        <NotFound>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <h1>Error 404</h1>
+                <p>There doesn't appear to be anything here...</p>
+            </LayoutView>
+        </NotFound>
+    </Router>

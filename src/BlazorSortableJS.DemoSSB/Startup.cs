@@ -51,7 +51,7 @@ namespace BlazorSortableJS.DemoSSB
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapBlazorHub().AddComponent(typeof(App), "app");
+                endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
         }

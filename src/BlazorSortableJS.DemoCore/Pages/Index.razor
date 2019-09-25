@@ -25,7 +25,6 @@ Resulting Data
 {
     SortableGroup<string> MyGroup;
     SortableGroup<string> My2Group;
-    bool FirstRun = true;
     List<string> items { get; set; } = new List<string> { "T1", "T2", "T3" };
     List<string> items2 { get; set; } = new List<string> { "T4", "T5", "T6" };
     List<string> resultsList { get; set; } = new List<string>();
@@ -36,9 +35,9 @@ Resulting Data
         return base.OnInitializedAsync();
     }
 
-    protected async override Task OnAfterRenderAsync()
+    protected async override Task OnAfterRenderAsync(bool firstrun)
     {
-        if (FirstRun)
+        if (firstrun)
         {
             MyGroup.Sortable.SetData(items);
             await MyGroup.Sortable.Create(MyGroup.Id, new SortableJsOptions
@@ -55,7 +54,6 @@ Resulting Data
                 animation = 100,
                 OnSort = async (e) => { resultsList = await My2Group.Sortable.GetData(); StateHasChanged(); }
             });
-            FirstRun = false;
             StateHasChanged();
         }
     }

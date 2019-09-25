@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
     <PackageId>BlazorSortableJs</PackageId>
-    <Version>1.0.0-preview8-01</Version>
+    <Version>1.0.0</Version>
     <Authors>John J Bomhold</Authors>
     <Title>Blazor SortableJs Wrapper</Title>
     <Description>
@@ -19,7 +19,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.0.0-preview8.19405.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.0.0-preview9.19465.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>

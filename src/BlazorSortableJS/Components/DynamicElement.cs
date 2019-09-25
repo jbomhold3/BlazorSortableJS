@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.RenderTree;
-using System;
+using Microsoft.AspNetCore.Components.Rendering;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace BlazorSortableJS.Components
 {
@@ -13,8 +11,8 @@ namespace BlazorSortableJS.Components
         /// </summary>
         [Parameter] public string TagName { get; set; }
 
-
         [Parameter] public RenderFragment ChildContent { get; set; }
+
         [Parameter(CaptureUnmatchedValues = true)]
         public IDictionary<string, object> MyParams { get; set; }
 
