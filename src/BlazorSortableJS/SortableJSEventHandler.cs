@@ -1,15 +1,11 @@
 ﻿using System;
 using Microsoft.JSInterop;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using System.Reflection;
 
 namespace BlazorSortableJS
 {
     public static class SortableJSEventHandler
     {
-      
         public static EventHandler<SortableJSEvent> OnChooseEvent { get; set; }
         public static EventHandler<SortableJSEvent> OnUnchooseEvent { get; set; }
         public static EventHandler<SortableJSEvent> OnStartEvent { get; set; }
@@ -29,72 +25,82 @@ namespace BlazorSortableJS
             OnChooseEvent?.Invoke(data.RefId, data);
             return default;
         }
+
         [JSInvokable]
         public static Task OnUnchoose(SortableJSEvent data)
         {
             OnUnchooseEvent?.Invoke(data.RefId, data);
             return default;
         }
+
         [JSInvokable]
         public static Task OnStart(SortableJSEvent data)
         {
             OnStartEvent?.Invoke(data.RefId, data);
             return default;
         }
+
         [JSInvokable]
         public static Task OnEnd(SortableJSEvent data)
         {
             OnEndEvent?.Invoke(data.RefId, data);
             return default;
         }
+
         [JSInvokable]
         public static Task OnAdd(SortableJSEvent data)
         {
             OnAddEvent?.Invoke(data.RefId, data);
             return default;
         }
+
         [JSInvokable]
         public static Task OnUpdate(SortableJSEvent data)
         {
             OnUpdateEvent?.Invoke(data.RefId, data);
             return default;
         }
+
         [JSInvokable]
         public static Task OnSort(SortableJSEvent data)
         {
             OnSortEvent?.Invoke(data.RefId, data);
             return default;
         }
+
         [JSInvokable]
         public static Task OnRemove(SortableJSEvent data)
         {
             OnRemoveEvent?.Invoke(data.RefId, data);
             return default;
         }
+
         [JSInvokable]
         public static Task OnFilter(SortableJSEvent data)
         {
             OnFilterEvent?.Invoke(data.RefId, data);
             return default;
         }
+
         [JSInvokable]
         public static Task OnMove(SortableJSEvent data)
         {
             OnMoveEvent?.Invoke(data.RefId, data);
             return default;
         }
+
         [JSInvokable]
         public static Task OnClone(SortableJSEvent data)
         {
             OnCloneEvent?.Invoke(data.RefId, data);
             return default;
         }
+
         [JSInvokable]
         public static Task OnChange(SortableJSEvent data)
         {
             OnChangeEvent?.Invoke(data.RefId, data);
             return default;
         }
-
     }
 }
