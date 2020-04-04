@@ -1,55 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BlazorSortableJS
 {
     public class SortableJsOptions
     {
+        public string Group { get; set; }
+        public bool? Sort { get; set; }
+        public bool? Disabled { get; set; }
+        public string Handle { get; set; }
+        public string Draggable { get; set; }
+        public int? SwapThreshold { get; set; }
+        public bool? InvertSwap { get; set; }
+        public int? InvertedSwapThreshold { get; set; }
+        public int? Delay { get; set; }
+        public bool? DelayOnTouchOnly { get; set; }
+        public int? TouchStartThreshold { get; set; }
+        public bool? RemoveCloneOnHide { get; set; }
+        public string Direction { get; set; }
+        public string GhostClass { get; set; }
+        public string ChosenClass { get; set; }
+        public string DragClass { get; set; }
+        public string Filter { get; set; }
+        public bool? PreventOnFilter { get; set; }
 
-        public string group { get; set; }
-        public bool? sort { get; set; }
-        public bool? disabled { get; set; } 
-        public string handle { get; set; }
-        public string draggable { get; set; }
-        public int? swapThreshold { get; set; }  
-        public bool? invertSwap { get; set; }  
-        public int? invertedSwapThreshold { get; set; } 
-        public int? delay { get; set; } 
-        public bool? delayOnTouchOnly { get; set; } 
-        public int? touchStartThreshold { get; set; } 
-        public bool? removeCloneOnHide { get; set; } 
-        public string direction { get; set; }
-        public string ghostClass { get; set; } 
-        public string chosenClass { get; set; } 
-        public string dragClass { get; set; } 
-        public string filter { get; set; }
-        public bool? preventOnFilter { get; set; }
+        public double? Animation { get; set; }
+        public string Easing { get; set; }
 
-        //  store: null,  // @see Store
-        public double? animation { get; set; }
-        public string easing { get; set; }
+        public string DataIdAttr { get; set; }
+        public bool? ForceFallback { get; set; }
 
-        public string dataIdAttr { get; set; } 
-        public bool? forceFallback { get; set; } 
+        public string FallbackClass { get; set; }
+        public bool? FallbackOnBody { get; set; }
+        public int? FallbackTolerance { get; set; }
 
-        public string fallbackClass { get; set; }
-        public bool? fallbackOnBody { get; set; } 
-        public int? fallbackTolerance { get; set; } 
+        public bool? DragoverBubble { get; set; }
 
-        public bool? dragoverBubble { get; set; } 
-        
-        public int? emptyInsertThreshold { get; set; } 
+        public int? EmptyInsertThreshold { get; set; }
 
-
-        //setData: function(/** DataTransfer */dataTransfer, /** HTMLElement*/dragEl) {
-
-        //dataTransfer.setData('Text', dragEl.textContent); // `dataTransfer` object of HTML5 DragEvent
-        //},
-
-        // Element is chosen
         public Action<SortableJSEvent> OnChoose { get; set; }
         public Action<SortableJSEvent> OnUnchoose { get; set; }
         public Action<SortableJSEvent> OnStart { get; set; }
@@ -70,26 +58,19 @@ namespace BlazorSortableJS
         {
             var t = fixMe.GetType();
             var returnClass = new Dictionary<string, object>();
+
             foreach (var pr in t.GetProperties())
             {
                 var val = pr.GetValue(fixMe);
-                if(pr.PropertyType == typeof(Action<SortableJSEvent>))
-                {
-
-                }
-                else if (val is string && string.IsNullOrWhiteSpace(val.ToString()))
-                {
-                }
-                else if (val == null)
-                {
-                }
-                else
+                if (pr.PropertyType != typeof(Action<SortableJSEvent>)
+                    && val != null
+                    && !string.IsNullOrWhiteSpace(val.ToString()))
                 {
                     returnClass.Add(pr.Name, val);
                 }
             }
+
             return returnClass;
         }
     }
-
 }
