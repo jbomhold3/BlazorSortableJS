@@ -1,18 +1,20 @@
-using Microsoft.AspNetCore.Blazor.Hosting;
+
+using DemoCore;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using System.Threading.Tasks;
 
 namespace BlazorSortableJS.Demo
 {
     internal class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
-        }
+            WebAssemblyHostBuilder builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-        public static IWebAssemblyHostBuilder CreateHostBuilder(string[] args)
-        {
-            return BlazorWebAssemblyHost.CreateDefaultBuilder()
-                .UseBlazorStartup<Startup>();
+
+            builder.RootComponents.Add<App>("app");
+
+            await builder.Build().RunAsync();
         }
     }
 }
