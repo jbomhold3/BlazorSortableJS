@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace BlazorSortableJS
 {
@@ -23,7 +24,6 @@ namespace BlazorSortableJS
         public string DragClass { get; set; }
         public string Filter { get; set; }
         public bool? PreventOnFilter { get; set; }
-
         public double? Animation { get; set; }
         public string Easing { get; set; }
 
@@ -66,7 +66,7 @@ namespace BlazorSortableJS
                     && val != null
                     && !string.IsNullOrWhiteSpace(val.ToString()))
                 {
-                    returnClass.Add(pr.Name, val);
+                    returnClass.Add(pr.Name.Substring(0,1).ToLowerInvariant() + pr.Name.Substring(1), val);
                 }
             }
 

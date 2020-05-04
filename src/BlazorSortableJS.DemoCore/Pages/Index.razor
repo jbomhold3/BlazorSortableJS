@@ -1,13 +1,14 @@
 ﻿@page "/"
 Sortable List
-<SortableGroup Class="list-group" TItem="string" @ref="MyGroup" @ref:suppressField>
+<button @onclick="New">Add</button>
+<SortableGroup Class="list-group" TItem="string" @ref="MyGroup">
     @foreach (var item in @MyGroup.Sortable.GetRaw())
     {
         <SortableItem Class="list-group-item" Item="item" TItem="string">@item.Data</SortableItem>
     }
 </SortableGroup>
 Same Group
-<SortableGroup Class="list-group" TItem="string" @ref="My2Group" @ref:suppressField> 
+<SortableGroup Class="list-group" TItem="string" @ref="My2Group">
     @foreach (var item in @My2Group.Sortable.GetRaw())
     {
         <SortableItem Class="list-group-item" Item="item" TItem="string">@item.Data</SortableItem>
@@ -29,12 +30,29 @@ Resulting Data
     List<string> items2 { get; set; } = new List<string> { "T4", "T5", "T6" };
     List<string> resultsList { get; set; } = new List<string>();
 
+    public async Task New()
+    {
+        var items = new List<string> { "T1", "T2", "T3", "T4", "T5" };
+        await MyGroup.Sortable.ClearAsync();
+        await MyGroup.Sortable.CreateAsync(MyGroup.Id, new SortableJsOptions
+        {
+            Group = "test",
+            Animation = 100,
+            //    OnSort = async (e) => { resultsList = await MyGroup.Sortable.GetData(); StateHasChanged(); }
+        });
+
+        MyGroup.Sortable.SetData(items);
+        StateHasChanged();
+    }
     protected override Task OnInitializedAsync()
     {
         resultsList = items;
         return base.OnInitializedAsync();
     }
-
+    public void Test(SortableJSEvent e)
+    {
+        Console.WriteLine(e);
+    }
     protected async override Task OnAfterRenderAsync(bool firstrun)
     {
         if (firstrun)
@@ -44,6 +62,7 @@ Resulting Data
             {
                 Group = "test",
                 Animation = 100,
+                OnClone = Test
                 //    OnSort = async (e) => { resultsList = await MyGroup.Sortable.GetData(); StateHasChanged(); }
             });
 
@@ -52,8 +71,10 @@ Resulting Data
             {
                 Group = "test",
                 Animation = 100,
+                OnClone = Test,
                 OnSort = async (e) => { resultsList = await My2Group.Sortable.GetDataAsync(); StateHasChanged(); }
             });
+
             StateHasChanged();
         }
     }

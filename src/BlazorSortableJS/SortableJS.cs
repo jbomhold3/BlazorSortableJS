@@ -33,8 +33,7 @@ namespace BlazorSortableJS
         {
             _opt = opt;
             _elId = elId;
-
-            await _jSRuntime.InvokeAsync<object>("BlazorSortableJS.Create", RefId, elId, opt.RemoveNulls());
+            await _jSRuntime.InvokeAsync<string>("BlazorSortableJS.Create", RefId, elId, opt.RemoveNulls());
 
             //Register to all Events
             SortableJSEventHandler.OnChooseEvent += OnChoose;
