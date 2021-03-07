@@ -162,7 +162,7 @@ namespace BlazorSortableJS
 
         public void Add(string dataId, string data)
         {
-            var newItem = JsonSerializer.Deserialize<T>(data);
+            var newItem = JsonSerializer.Deserialize<T>(data, new JsonSerializerOptions(){PropertyNameCaseInsensitive = true});
             _list.Add(new SortableJSSortItem<T>() { DataId = dataId, Data = newItem, Show = false });
         }
 
@@ -203,7 +203,7 @@ namespace BlazorSortableJS
         {
             if (Guid.Parse(sender.ToString()) == RefId)
             {
-                var json = JsonSerializer.Serialize(data.Data);
+                var json = JsonSerializer.Serialize(data.Data, new JsonSerializerOptions(){PropertyNameCaseInsensitive = true});
                 Add(data.DataId, json);
 
                 _opt.OnAdd?.Invoke(data);

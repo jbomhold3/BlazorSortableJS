@@ -1,9 +1,10 @@
 @inherits DynamicComponentBase
+@attribute [Obsolete("SortGroup is not preferred")]
 @typeparam TItem
 @inject IJSRuntime jSRuntime;
 <CascadingValue Value="@Sortable">
     <DynamicElement @attributes="@UnknownParameters" TagName="@Tag" class="@Class" @onclick="@OnClick" id="@Id" data-refId="@Sortable.RefId">
-      @ChildContent
+        @ChildContent
     </DynamicElement>
 </CascadingValue>
 @code {
@@ -26,7 +27,7 @@
 
     protected override Task OnInitializedAsync()
     {
-    
+
          if (Id == null)
             Id = Guid.NewGuid().ToString();
         Sortable = new SortableJS<TItem>(jSRuntime);

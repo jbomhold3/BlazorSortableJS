@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+	<TargetFrameworks>netstandard2.1;net5.0</TargetFrameworks>
     <RazorLangVersion>3.0</RazorLangVersion>
     <PackageId>BlazorSortableJs</PackageId>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <Authors>John J Bomhold</Authors>
     <Title>Blazor SortableJs Wrapper</Title>
     <Description>
@@ -18,9 +18,12 @@
     <Copyright>John J Bomhold</Copyright>
   </PropertyGroup>
 
-  <ItemGroup>
-	  <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.4" />
-  </ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.*" />
+	</ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' ">
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.4" />
+	</ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\js\" />

@@ -1,81 +1,137 @@
 ﻿@page "/"
-Sortable List
-<button @onclick="New">Add</button>
-<SortableGroup Class="list-group" TItem="string" @ref="MyGroup">
-    @foreach (var item in @MyGroup.Sortable.GetRaw())
-    {
-        <SortableItem Class="list-group-item" Item="item" TItem="string">@item.Data</SortableItem>
-    }
-</SortableGroup>
-Same Group
-<SortableGroup Class="list-group" TItem="string" @ref="My2Group">
-    @foreach (var item in @My2Group.Sortable.GetRaw())
-    {
-        <SortableItem Class="list-group-item" Item="item" TItem="string">@item.Data</SortableItem>
-    }
-</SortableGroup>
-Resulting Data
+@using System.Text.Json
+<button @onclick="Remove">Remove One</button>
+
+<div class="row">
+    <div class="col-6">Sortable List
+        <SortGroup Items="items" Id="@Id1" Class="list-group" TemplateClass="list-group-item" @ref="MyGroup" TItem="Items" GroupName="test" OnAdd="OnAdd" OnSort="OnSort" OnRemove="OnRemove">
+            <Template Context="test">
+                @test.Data.Text - @test.Data.Id
+            </Template>
+        </SortGroup>
+        Same Group
+        <SortGroup Items="items2" Id="@Id2" Class="list-group" TemplateClass="list-group-item" OnAdd="OnAdd" OnSort="OnSort" OnRemove="OnRemove" TItem="Items" @ref="My2Group" GroupName="test">
+            <Template Context="test">
+                @test.Data.Text - @test.Data.Id
+            </Template>
+        </SortGroup>
+        </div>
+    <div class="col-6">
+     
+        List 1 Raw Contents
+        <ul class="list-group">
+            @foreach (var item in items.OrderBy(q => q.Order))
+            {
+                <li class="list-group-item">@item.Order - @item.Text - @item.Id</li>
+            }
+        </ul>
+        List 2 Raw Contents
+        <ul class="list-group">
+            @foreach (var item in items2.OrderBy(q => q.Order))
+            {
+                <li class="list-group-item">@item.Order -@item.Text - @item.Id</li>
+            }
+        </ul>
+    </div>
+</div>
+Resulting For Gorup 2
 <ul class="list-group">
-    @foreach (var item in resultsList)
+    @foreach (var item in ResultsList)
     {
-        <li class="list-group-item">@item</li>
+        <li class="list-group-item">@item.Text - @item.Order - @item.Id</li>
     }
 </ul>
 
 @code
 {
-    SortableGroup<string> MyGroup;
-    SortableGroup<string> My2Group;
-    List<string> items { get; set; } = new List<string> { "T1", "T2", "T3" };
-    List<string> items2 { get; set; } = new List<string> { "T4", "T5", "T6" };
-    List<string> resultsList { get; set; } = new List<string>();
+    string Id1 = Guid.NewGuid().ToString();
+    string Id2 = Guid.NewGuid().ToString();
+    int Order = 0;
+    SortGroup<Items> MyGroup;
+    SortGroup<Items> My2Group;
+    List<Items> items { get; set; } = new List<Items>
+{
+        new Items("T1"),
+        new Items("T2"),
+        new Items("T3"),
+    };
+    List<Items> items2 { get; set; } = new List<Items>
+{
+        new Items("T4"),
+        new Items("T5"),
+        new Items("T6"),
+    };
+    List<Items> ResultsList { get; set; } = new List<Items>();
 
-    public async Task New()
+    public async Task Remove()
     {
-        var items = new List<string> { "T1", "T2", "T3", "T4", "T5" };
-        await MyGroup.Sortable.ClearAsync();
-        await MyGroup.Sortable.CreateAsync(MyGroup.Id, new SortableJsOptions
+        // This is just a shortcut for the demo
+        try
         {
-            Group = "test",
-            Animation = 100,
-            //    OnSort = async (e) => { resultsList = await MyGroup.Sortable.GetData(); StateHasChanged(); }
-        });
-
-        MyGroup.Sortable.SetData(items);
-        StateHasChanged();
+            items.Remove(items.First());
+        }
+        catch{}
+        // Inform Group of direct changes.
+        await MyGroup.UpdateAsync();
+        ResultsList = await My2Group.GetOrderListAsync("Order");
     }
+
+    public async Task OnSort(SortableEvent<Items> e)
+    {
+        ResultsList = await My2Group.GetOrderListAsync("Order");
+    }
+    public async Task OnAdd(SortableEvent<Items> e)
+    {
+        // Changes are already tracked do not use UpdateAsync()
+        if (e.Sender.Id == Id1)
+        {
+            items.Add(e.Data);
+        }
+        else
+        {
+            items2.Add(e.Data);
+        }
+        _= await MyGroup.GetOrderListAsync("Order");
+        ResultsList = await My2Group.GetOrderListAsync("Order");
+    }
+    public async Task OnRemove(SortableEvent<Items> e)
+    {
+        // Changes are already tracked do not use UpdateAsync()
+        if (e.Sender.Id == Id1)
+        {
+            var item = items.FirstOrDefault(q => q.Id == e.Data.Id);
+            if (item != null)
+                items.Remove(item);
+        }
+        else
+        {
+            var item = items2.FirstOrDefault(q => q.Id == e.Data.Id);
+            if (item != null)
+                items2.Remove(item);
+        }
+        _ = await MyGroup.GetOrderListAsync("Order");
+        ResultsList = await My2Group.GetOrderListAsync("Order");
+    }
+
     protected override Task OnInitializedAsync()
     {
-        resultsList = items;
         return base.OnInitializedAsync();
     }
-    public void Test(SortableJSEvent e)
+
+
+    public class Items
     {
-        Console.WriteLine(e);
-    }
-    protected async override Task OnAfterRenderAsync(bool firstrun)
-    {
-        if (firstrun)
+        public int Order { get; set; } = 0;
+        public string Text { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+
+        public Items()
         {
-            MyGroup.Sortable.SetData(items);
-            await MyGroup.Sortable.CreateAsync(MyGroup.Id, new SortableJsOptions
-            {
-                Group = "test",
-                Animation = 100,
-                OnClone = Test
-                //    OnSort = async (e) => { resultsList = await MyGroup.Sortable.GetData(); StateHasChanged(); }
-            });
 
-            My2Group.Sortable.SetData(items2);
-            await My2Group.Sortable.CreateAsync(My2Group.Id, new SortableJsOptions
-            {
-                Group = "test",
-                Animation = 100,
-                OnClone = Test,
-                OnSort = async (e) => { resultsList = await My2Group.Sortable.GetDataAsync(); StateHasChanged(); }
-            });
-
-            StateHasChanged();
+        }
+        public Items(string text)
+        {
+            Text = text;
         }
     }
 }
