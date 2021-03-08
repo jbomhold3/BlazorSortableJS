@@ -4,7 +4,7 @@
     {
         if (IsDiv)
     {
-    <div class="@TemplateClass" @onclick="@OnClick" id="@Id" data-refId="@Sortable.RefId">
+    <div class="@Class" @onclick="@OnClick" id="@Id" data-refId="@Sortable.RefId">
         @foreach (var item in Sortable.GetRaw())
             {
         <div @key="item" @onclick="@TemplateOnClick" data-id="@item.DataId" Id="@(Guid.NewGuid())" class="@TemplateClass">
