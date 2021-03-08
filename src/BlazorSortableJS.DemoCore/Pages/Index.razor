@@ -1,14 +1,17 @@
 ﻿@page "/"
 @using System.Text.Json
 <button @onclick="Remove">Remove One</button>
-
-<div class="row">
+<button @onclick="Add">
+    Add
+</button><div class="row">
     <div class="col-6">Sortable List
-        <SortGroup Items="items" Id="@Id1" Class="list-group" TemplateClass="list-group-item" @ref="MyGroup" TItem="Items" GroupName="test" OnAdd="OnAdd" OnSort="OnSort" OnRemove="OnRemove">
-            <Template Context="test">
-                @test.Data.Text - @test.Data.Id
-            </Template>
-        </SortGroup>
+        
+            <SortGroup Items="items" Id="@Id1" Class="list-group" TemplateClass="list-group-item" @ref="                    MyGroup" TItem="Items" GroupName="test" OnAdd="OnAdd" OnSort="OnSort" OnRemove="OnRemove">
+                <Template Context="test">
+                    @test.Data.Text - @test.Data.Id
+                </Template>
+            </SortGroup>
+        
         Same Group
         <SortGroup Items="items2" Id="@Id2" Class="list-group" TemplateClass="list-group-item" OnAdd="OnAdd" OnSort="OnSort" OnRemove="OnRemove" TItem="Items" @ref="My2Group" GroupName="test">
             <Template Context="test">
@@ -63,6 +66,11 @@ Resulting For Gorup 2
     };
     List<Items> ResultsList { get; set; } = new List<Items>();
 
+    public async Task Add()
+    {
+        items.Add(new Items("T8"));
+        await MyGroup.UpdateAsync();
+    }
     public async Task Remove()
     {
         // This is just a shortcut for the demo

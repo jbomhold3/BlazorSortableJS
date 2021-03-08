@@ -39,6 +39,7 @@ namespace BlazorSortableJS.Components
         public SortableJS<TItem> Sortable { get; set; }
         private bool Render;
         private bool ForceReDraw;
+        private bool ForceDelay;
 
         public async Task<List<TItem>> GetOrderListAsync(string orderColumn)
         {
@@ -159,8 +160,15 @@ namespace BlazorSortableJS.Components
         {
             if (ForceReDraw)
             {
-                Render = true;
+                ForceDelay = true;
                 ForceReDraw = false;
+                await InvokeAsync(StateHasChanged);
+            }
+            // Fix for client side. Ensures Element is there before continuing.
+            else if (ForceDelay)
+            {
+                ForceDelay = false;
+                Render = true;
                 await InvokeAsync(StateHasChanged);
             }
             if (firstrun || Render)

@@ -1,28 +1,27 @@
 ﻿@typeparam TItem
-<CascadingValue Value="@Sortable">
-    @if(!ForceReDraw)
-    {
-        if (IsDiv)
-    {
+@if (!ForceReDraw)
+{
+@if (IsDiv)
+{
     <div class="@Class" @onclick="@OnClick" id="@Id" data-refId="@Sortable.RefId">
         @foreach (var item in Sortable.GetRaw())
-            {
-        <div @key="item" @onclick="@TemplateOnClick" data-id="@item.DataId" Id="@(Guid.NewGuid())" class="@TemplateClass">
-            @Template(item)
-        </div>
-            }
+        {
+            <div @key="item" @onclick="@TemplateOnClick" data-id="@item.DataId" Id="@(Guid.NewGuid())" class="@TemplateClass">
+                @Template(item)
+            </div>
+        }
     </div>
-    }
-    else
-    {
+}
+else
+{
     <ul class="@Class" @onclick="@OnClick" id="@Id" data-refId="@Sortable.RefId">
+
         @foreach (var item in Sortable.GetRaw())
-            {
-        <li @key="item" @onclick="@TemplateOnClick" data-id="@item.DataId" Id="@(Guid.NewGuid())" class="@TemplateClass">
-            @Template(item)
-        </li>
-            }
+        {
+            <li @key="item" @onclick="@TemplateOnClick" data-id="@item.DataId" Id="@(Guid.NewGuid())" class="@TemplateClass">
+                @Template(item)
+            </li>
+        }
     </ul>
-    }
-    }
-</CascadingValue>
+}
+}
