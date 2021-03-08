@@ -15,38 +15,38 @@ This is a very early project. However, it does function and is very much usable.
 -  Usage
 ``` html
 Sortable List
-<SortableGroup Class="list-group" TItem="string" @ref="MyGroup">
-    @foreach (var item in @MyGroup.Sortable.GetRaw())
-    {
-        <SortableItem Class="list-group-item" Item="item" TItem="string">@item.Data</SortableItem>
-    }
-</SortableGroup>
+<SortGroup Items="items" Id="@Id1" Class="list-group" TemplateClass="list-group-item" @ref="MyGroup" TItem="Items" OnSort="OnSort">
+    <Template Context="item">
+        @item.Data.Text
+    </Template>
+</SortGroup>
+@resultsList
 ```    
 ``` c#
 @code
 {
-    SortableGroup<string> MyGroup;
-    List<string> items { get; set; } = new List<string> { "T1", "T2", "T3" };
+    SortGroup<string> MyGroup;
+    List<Items> items { get; set; } = new List<Items>
+    {
+        new Items("T1"),
+        new Items("T2"),
+        new Items("T3"),
+    };
     List<string> resultsList { get; set; } = new List<string>();
-
-    protected override Task OnInitializedAsync()
+    
+    public async Task OnSort(SortableEvent<Items> e)
     {
-        resultsList = items;
-        return base.OnInitializedAsync();
+        ResultsList = await e.Sender.GetOrderListAsync("Order");
     }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    
+     public class Items
     {
-        if (firstRender)
-        {
-            MyGroup.Sortable.SetData(items);
-            await MyGroup.Sortable.CreateAsync(MyGroup.Id, new SortableJsOptions
-            {
-                Group = "test",
-                Animation = 100,
-            });         
+        public int Order { get; set; } = 0;
+        public string Text { get; set; }
 
-            StateHasChanged();
+        public Items(string text)
+        {
+            Text = text;
         }
     }
 }
