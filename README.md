@@ -25,7 +25,7 @@ Sortable List
 ``` c#
 @code
 {
-    SortGroup<string> MyGroup;
+    SortGroup<Items> MyGroup;
     List<Items> items { get; set; } = new List<Items>
     {
         new Items("T1"),
