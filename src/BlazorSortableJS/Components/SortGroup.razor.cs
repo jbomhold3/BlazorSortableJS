@@ -16,6 +16,7 @@ namespace BlazorSortableJS.Components
         [Parameter] public string Class { get; set; }
         [Parameter] public string TemplateClass { get; set; }
         [Parameter] public string GroupName { get; set; } = Guid.NewGuid().ToString();
+        [Parameter] public string Handle { get; set; }
         [Parameter] public string Style { get; set; }
         [Parameter] public bool IsDiv { get; set; }
         [Parameter] public RenderFragment<SortableJSSortItem<TItem>> Template { get; set; }
@@ -141,6 +142,7 @@ namespace BlazorSortableJS.Components
             await Sortable.CreateAsync(Id, new SortableJsOptions
             {
                 Group = GroupName,
+                Handle = Handle,
                 Animation = 100,
                 OnClone = OnCloneEvent,
                 OnAdd = OnAddEvent,
