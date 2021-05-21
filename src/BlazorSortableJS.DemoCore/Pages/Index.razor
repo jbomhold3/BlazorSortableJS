@@ -6,9 +6,9 @@
 </button><div class="row">
     <div class="col-6">Sortable List
         
-            <SortGroup Items="items" Id="@Id1" Class="list-group" TemplateClass="list-group-item" @ref="                    MyGroup" TItem="Items" GroupName="test" OnAdd="OnAdd" OnSort="OnSort" OnRemove="OnRemove">
+            <SortGroup Items="items" Id="@Id1" Class="list-group" TemplateClass="list-group-item" @ref="MyGroup" TItem="Items" GroupName="test" OnAdd="OnAdd" OnSort="OnSort" OnRemove="OnRemove" Handle=".my-handle">
                 <Template Context="test">
-                    @test.Data.Text - @test.Data.Id
+                    <span class="oi oi-move my-handle"></span> @test.Data.Text - @test.Data.Id
                 </Template>
             </SortGroup>
         
