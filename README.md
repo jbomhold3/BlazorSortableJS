@@ -5,6 +5,7 @@ BlazorSortableJS is a Blazor Wrapper over JavaScript [SortableJS](https://github
 >Sortable is a JavaScript library for reorderable drag-and-drop lists.
 
 [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/BlazorSortableJS.svg?color=orange)](https://www.nuget.org/packages/BlazorSortableJS/)
+
 _host.cshtml or index.html 
 ``` html 
  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
