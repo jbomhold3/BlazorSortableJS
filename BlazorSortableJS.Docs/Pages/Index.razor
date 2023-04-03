@@ -1,0 +1,49 @@
+﻿@page "/"
+@implements IDisposable;
+@inject NavigationManager Navman
+<div class="container">
+    <MarkdownToComponent Source="@Source" NamespaceRoot="BlazorSortableJS.Docs.Samples" WebRoot="docs/Samples/" DefaultClass="my-4">
+            404
+        </MarkdownToComponent>
+</div>
+<AnchorNavigation />
+@code {
+
+    [ParameterAttribute]
+    public string? Area { get; set; }
+
+    [ParameterAttribute]
+    public string? Page { get; set; }
+
+    private string Source { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (Area is null) Source = $"docs/Static/index.md";
+        else if (Page is null) Source = $"docs/Static/{FirstCharToUpper(Area)}.md";
+        else Source = $"docs/Static/{FirstCharToUpper(Area)}/{FirstCharToUpper(Page)}.md";
+        Navman.LocationChanged += NavmanOnLocationChanged;
+    }
+
+    private void NavmanOnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        if (Area is null) Source = $"docs/Static/index.md";
+        else if (Page is null) Source = $"docs/Static/{FirstCharToUpper(Area)}.md";
+        else Source = $"docs/Static/{FirstCharToUpper(Area)}/{FirstCharToUpper(Page)}.md";
+        StateHasChanged();
+    }
+
+    private static string FirstCharToUpper(string input) =>
+        input switch
+        {
+            null => throw new ArgumentNullException(nameof(input)),
+            "" => throw new ArgumentException($"{nameof(input)} cannot be empty", nameof(input)),
+            _ => string.Concat(input[0].ToString().ToUpper(), input.AsSpan(1))
+        };
+
+    public void Dispose()
+    {
+        Navman.LocationChanged -= NavmanOnLocationChanged;
+    }
+
+}

@@ -1,0 +1,16 @@
+﻿@typeparam TItem
+@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
+@implements IAsyncDisposable
+
+@ChildContent
+
+<div @ref="_dropZoneContainer" class="@Class">
+    @foreach (var item in Items)
+    {
+        <Keyed @key="item">
+            @Template(item)
+        </Keyed>
+    }
+</div>
+

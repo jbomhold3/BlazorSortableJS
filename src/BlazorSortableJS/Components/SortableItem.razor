@@ -1,9 +1,0 @@
-@inherits DynamicComponentBase
-@attribute [Obsolete("SortGroup is not preferred")]
-@typeparam TItem
-@if (Item != null)
-{
-<DynamicElement Attributes="@UnknownParameters" TagName="@Tag" class="@Class" @onclick="@OnClick" Id="@Id" data-id="@Item.DataId">
-    @ChildContent
-</DynamicElement>
-}
