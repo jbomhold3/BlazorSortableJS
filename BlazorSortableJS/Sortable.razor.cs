@@ -81,24 +81,36 @@ namespace BlazorSortableJS
             var item = Items[oldIndex];
             Items.RemoveAt(oldIndex);
             Items.Insert(newIndex, item);
-            if (ParentSortable != null && ParentSortable.OnDataChanged.HasDelegate)
-                _ = ParentSortable.OnDataChanged.InvokeAsync();
+            if (ParentSortable != null)
+            {
+                if (ParentSortable.OnDataChanged.HasDelegate)
+                    _ = ParentSortable.OnDataChanged.InvokeAsync();
+                _ = ParentSortable.RefreshAsync();
+            }
         }
 
         [JSInvokable]
         public void RemoveItem(int index)
         {
             Items.RemoveAt(index);
-            if (ParentSortable != null && ParentSortable.OnDataChanged.HasDelegate)
-                _ = ParentSortable.OnDataChanged.InvokeAsync();
+            if (ParentSortable != null)
+            {
+                if (ParentSortable.OnDataChanged.HasDelegate)
+                    _ = ParentSortable.OnDataChanged.InvokeAsync();
+                _ = ParentSortable.RefreshAsync();
+            }
         }
 
         [JSInvokable]
         public void AddItem(int index, TItem item)
         {
             Items.Insert(index, item);
-            if (ParentSortable != null && ParentSortable.OnDataChanged.HasDelegate)
-                _ = ParentSortable.OnDataChanged.InvokeAsync();
+            if (ParentSortable != null)
+            {
+                if (ParentSortable.OnDataChanged.HasDelegate)
+                    _ = ParentSortable.OnDataChanged.InvokeAsync();
+                _ = ParentSortable.RefreshAsync();
+            }
         }
 
     }
