@@ -22,6 +22,15 @@ namespace BlazorSortableJS
         [Parameter]
         public object? Options { get; set; } 
 
+        [Parameter]
+        public EventCallback<TItem> OnItemAdded { get; set; }
+
+        [Parameter]
+        public EventCallback<TItem> OnOrderUpdate { get; set; }
+        
+        [Parameter]
+        public EventCallback<TItem> OnItemRemoved { get; set; }
+
         internal ElementReference _dropZoneContainer;
         private bool _shouldRender = true;
         private bool _hasPreRendered;
@@ -81,6 +90,9 @@ namespace BlazorSortableJS
             var item = Items[oldIndex];
             Items.RemoveAt(oldIndex);
             Items.Insert(newIndex, item);
+            if(OnItemAdded.HasDelegate){
+                OnItemAdded.InvokeAsync(item);
+            }
             if (ParentSortable != null)
             {
                 if (ParentSortable.OnDataChanged.HasDelegate)
@@ -92,7 +104,12 @@ namespace BlazorSortableJS
         [JSInvokable]
         public void RemoveItem(int index)
         {
+            var item = Items[index];
             Items.RemoveAt(index);
+            if(OnItemRemoved.HasDelegate)
+            {
+                OnItemRemoved.InvokeAsync(item);
+            }
             if (ParentSortable != null)
             {
                 if (ParentSortable.OnDataChanged.HasDelegate)
@@ -105,6 +122,10 @@ namespace BlazorSortableJS
         public void AddItem(int index, TItem item)
         {
             Items.Insert(index, item);
+            if(OnItemAdded.HasDelegate)
+            {
+                OnItemAdded.InvokeAsync(item);
+            }
             if (ParentSortable != null)
             {
                 if (ParentSortable.OnDataChanged.HasDelegate)
