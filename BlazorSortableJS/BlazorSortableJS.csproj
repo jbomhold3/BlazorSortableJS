@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+		<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<PackageId>BlazorSortableJs</PackageId>
@@ -16,7 +16,7 @@
 		<RepositoryUrl>https://github.com/jbomhold3/BlazorSortableJS</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<Copyright>John J Bomhold</Copyright>
-		<Version>2.0.0-Preview2</Version>
+		<Version>2.0.0-Preview3</Version>
 	</PropertyGroup>
 
 
@@ -24,11 +24,11 @@
 		<SupportedPlatform Include="browser" />
 	</ItemGroup>
 
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net8.0' ">
 		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.*" />
 	</ItemGroup>
 
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net7.0' ">
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net9.0' ">
 		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.*" />
 	</ItemGroup>
 </Project>

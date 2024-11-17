@@ -4,7 +4,7 @@
             <h6 class="text-center fw-bold">Set 1</h6>
             <Sortable TItem="string" Items="items" Class="list-group" Options="_options">
                 <Template Context="item">
-                    <div class="list-group-item">@item</div>
+                    <div class="list-group-item" @key="item">@item</div>
                 </Template>
             </Sortable>
         </div>
@@ -12,7 +12,7 @@
             <h6 class="text-center fw-bold">Set 2</h6>
             <Sortable TItem="string" Items="items2" Class="list-group" Options="_options">
                 <Template Context="item">
-                    <div class="list-group-item tinted">@item</div>
+                    <div class="list-group-item tinted" @key="item">@item</div>
                 </Template>
             </Sortable>
         </div>

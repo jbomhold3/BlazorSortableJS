@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33513.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSortableJS.Demo", "BlazorSortableJS.Demo\BlazorSortableJS.Demo.csproj", "{8B68FE92-34BA-4A37-B7F4-887156F6C995}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorSortableJS.Demo", "BlazorSortableJS.Demo\BlazorSortableJS.Demo.csproj", "{8B68FE92-34BA-4A37-B7F4-887156F6C995}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSortableJS", "BlazorSortableJS\BlazorSortableJS.csproj", "{669321D7-F88F-479A-A9D3-68C0144981F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorSortableJS", "BlazorSortableJS\BlazorSortableJS.csproj", "{669321D7-F88F-479A-A9D3-68C0144981F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSortableJS.Docs", "BlazorSortableJS.Docs\BlazorSortableJS.Docs.csproj", "{39B09C26-A1EC-4542-82D4-4D21831BE856}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorSortableJS.Docs", "BlazorSortableJS.Docs\BlazorSortableJS.Docs.csproj", "{39B09C26-A1EC-4542-82D4-4D21831BE856}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSortableJS.WASM", "BlazorSortableJS.WASM\BlazorSortableJS.WASM.csproj", "{79B32E3C-8C86-4A89-B5FC-C1EC7D735C1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorSortableJS.WASM", "BlazorSortableJS.WASM\BlazorSortableJS.WASM.csproj", "{79B32E3C-8C86-4A89-B5FC-C1EC7D735C1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

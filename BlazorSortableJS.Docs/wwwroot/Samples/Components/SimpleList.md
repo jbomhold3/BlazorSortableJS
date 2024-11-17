@@ -2,7 +2,7 @@
     <div class="col-6">
         <h6 class="text-center fw-bold">Sortable</h6>
         <SortableWrapper OnDataChanged="@(() => InvokeAsync(StateHasChanged))">
-            <Sortable TItem="string" Items="items" Class="list-group" Options="_options">
+            <Sortable TItem="string" Items="items" Class="list-group" Options="_options" OnDataChanged="Test">
                 <Template Context="item">
                     <div class="list-group-item">@item</div>
                 </Template>
@@ -25,6 +25,12 @@
         animation = 150,
         ghostClass = "blue-background-class"
     };
+    private async Task Test()
+    {
+        await Task.Delay(1000);
+        Console.WriteLine("Test");
+
+    }
     private List<string> items = new List<string>
     {
         "Item 1-1",

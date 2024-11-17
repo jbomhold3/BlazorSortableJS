@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System.Text.Json;
 
 namespace BlazorSortableJS
 {
@@ -10,12 +11,16 @@ namespace BlazorSortableJS
 
         [Parameter]
         public List<TItem> Items { get; set; } = new List<TItem> { };
-
+        private List<KeyedItem<TItem>> _keyedItems = new();
+        private List<TItem> _lastItems = new();
         [Parameter]
         public RenderFragment<TItem> Template { get; set; } = null!;
 
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
+
+        [Parameter]
+        public Func<Task>? OnDataChanged { get; set; }
 
         [Parameter]
         public string Class { get; set; } = string.Empty;
@@ -25,6 +30,18 @@ namespace BlazorSortableJS
         internal ElementReference _dropZoneContainer;
         private bool _shouldRender = true;
         private bool _hasPreRendered;
+
+        protected override void OnParametersSet()
+        {
+            if (!_lastItems.SequenceEqual(Items))
+            {
+                _lastItems = Items.Select(x => x).ToList() ;
+                
+                _keyedItems = Items.Select((item, index) => new KeyedItem<TItem> { Key = Guid.NewGuid().ToString(), Item = item }).ToList();
+
+            }
+        }
+
         protected override void OnInitialized()
         {
             if(ParentSortable != null)
@@ -76,7 +93,7 @@ namespace BlazorSortableJS
         }
 
         [JSInvokable]
-        public void UpdateItemOrder(int oldIndex, int newIndex)
+        public async Task UpdateItemOrder(int oldIndex, int newIndex)
         {
             var item = Items[oldIndex];
             Items.RemoveAt(oldIndex);
@@ -84,32 +101,44 @@ namespace BlazorSortableJS
             if (ParentSortable != null)
             {
                 if (ParentSortable.OnDataChanged.HasDelegate)
-                    _ = ParentSortable.OnDataChanged.InvokeAsync();
-                _ = ParentSortable.RefreshAsync();
+                    await ParentSortable.OnDataChanged.InvokeAsync();
+                await ParentSortable.RefreshAsync();
+            }
+            if(OnDataChanged is not null)
+            {
+                await OnDataChanged.Invoke();
             }
         }
 
         [JSInvokable]
-        public void RemoveItem(int index)
+        public async Task RemoveItem(int index)
         {
             Items.RemoveAt(index);
             if (ParentSortable != null)
             {
                 if (ParentSortable.OnDataChanged.HasDelegate)
-                    _ = ParentSortable.OnDataChanged.InvokeAsync();
-                _ = ParentSortable.RefreshAsync();
+                    await ParentSortable.OnDataChanged.InvokeAsync();
+                await ParentSortable.RefreshAsync();
+            }
+            if (OnDataChanged is not null)
+            {
+                await OnDataChanged.Invoke();
             }
         }
 
         [JSInvokable]
-        public void AddItem(int index, TItem item)
+        public async Task AddItem(int index, TItem item)
         {
-            Items.Insert(index, item);
+            Items.Insert(index, item );
             if (ParentSortable != null)
             {
                 if (ParentSortable.OnDataChanged.HasDelegate)
-                    _ = ParentSortable.OnDataChanged.InvokeAsync();
-                _ = ParentSortable.RefreshAsync();
+                    await ParentSortable.OnDataChanged.InvokeAsync();
+                await ParentSortable.RefreshAsync();
+            }
+            if (OnDataChanged is not null)
+            {
+                await OnDataChanged.Invoke();
             }
         }
 

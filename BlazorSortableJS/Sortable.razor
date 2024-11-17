@@ -6,10 +6,10 @@
 @ChildContent
 
 <div @ref="_dropZoneContainer" class="@Class">
-    @foreach (var item in Items)
+    @foreach (var keyedItem in _keyedItems)
     {
-        <Keyed @key="item">
-            @Template(item)
+        <Keyed @key="keyedItem.Key">
+            @Template(keyedItem.Item) 
         </Keyed>
     }
 </div>
