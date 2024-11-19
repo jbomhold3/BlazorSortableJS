@@ -36,7 +36,6 @@ namespace BlazorSortableJS
             if (!_lastItems.SequenceEqual(Items))
             {
                 _lastItems = Items.Select(x => x).ToList() ;
-                
                 _keyedItems = Items.Select((item, index) => new KeyedItem<TItem> { Key = Guid.NewGuid().ToString(), Item = item }).ToList();
 
             }
@@ -53,6 +52,13 @@ namespace BlazorSortableJS
             _shouldRender = true;
             if (ParentSortable != null)
                 await ParentSortable.DestroySortableAsync(this);
+
+            if (!_lastItems.SequenceEqual(Items))
+            {
+                _lastItems = Items.Select(x => x).ToList();
+                _keyedItems = Items.Select((item, index) => new KeyedItem<TItem> { Key = Guid.NewGuid().ToString(), Item = item }).ToList();
+
+            }
             await InvokeAsync(StateHasChanged);
         }
 
