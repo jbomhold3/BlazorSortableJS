@@ -1,6 +1,7 @@
-window.initializeSortable = (container, blazorComponent, items, options) => {
+window.initializeSortable = (container, blazorComponent, items, options, sortableId) => {
     blazorComponent.items = items;
-   
+    blazorComponent.sortableId = sortableId || '';
+
     const common = {
         onUpdate: function (evt) {
             blazorComponent.invokeMethodAsync('UpdateItemOrder', evt.oldIndex, evt.newIndex);
@@ -12,29 +13,28 @@ window.initializeSortable = (container, blazorComponent, items, options) => {
             const newIndex = evt.newIndex;
             const fromComponent = evt.from.__blazor_component;
             const toComponent = evt.to.__blazor_component;
-            if (options.group && options.group.pull === 'clone') {
+            const sourceSortableId = fromComponent.sortableId || null;
+
+            if (evt.pullMode === 'clone') {
+                // Sortable.js inserts a cloned DOM element, but Blazor will render its own
+                // Remove the Sortable clone to prevent duplicates
+                evt.item.remove();
+
                 const movedItem = fromComponent.items[oldIndex];
                 toComponent.items.splice(newIndex, 0, movedItem);
-                toComponent.invokeMethodAsync('AddItem', newIndex, movedItem);
+                toComponent.invokeMethodAsync('AddItem', newIndex, movedItem, sourceSortableId, oldIndex);
             }
             else {
                 const movedItem = fromComponent.items.splice(oldIndex, 1)[0];
                 fromComponent.invokeMethodAsync('RemoveItem', oldIndex);
                 toComponent.items.splice(newIndex, 0, movedItem);
-                toComponent.invokeMethodAsync('AddItem', newIndex, movedItem);
+                toComponent.invokeMethodAsync('AddItem', newIndex, movedItem, sourceSortableId, oldIndex);
             }
         }
     };
 
     const init = Object.assign({}, options, common);
     Sortable.create(container, init);
-    //new Sortable(container, {
-    //    animation: 150,
-    //    ghostClass: "blue-background-class",
-    //    chosenClass: "sortable-chosen",
-    //    dragClass: "sortable-drag",
-        
-    //});
     container.__blazor_component = blazorComponent;
 };
 

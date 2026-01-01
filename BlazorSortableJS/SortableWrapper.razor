@@ -9,17 +9,10 @@
     [Parameter] public RenderFragment ChildContent { get; set; }
     [Parameter] public EventCallback OnDataChanged { get; set; }
     public Func<Task>? OnRefresh { get; set; }
-    private bool _shouldRender;
-    private bool _hasPreRendered;
-    protected override bool ShouldRender()
-    {
-        return _shouldRender;
-    }
-
 
     public async Task NotifyDropZoneRendered<TItem>(Sortable<TItem> sortable)
     {
-        await JSRuntime.InvokeVoidAsync("initializeSortable", sortable._dropZoneContainer, DotNetObjectReference.Create(sortable), sortable.Items, sortable.Options);
+        await JSRuntime.InvokeVoidAsync("initializeSortable", sortable._dropZoneContainer, DotNetObjectReference.Create(sortable), sortable.Items, sortable.Options, sortable.Id);
     }
 
     public async Task DestroySortableAsync<TItem>(Sortable<TItem> dropZone)
@@ -27,21 +20,8 @@
         await JSRuntime.InvokeVoidAsync("destroySortable", dropZone._dropZoneContainer);
     }
 
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (firstRender)
-        {
-            _hasPreRendered = true;
-        }
-        if (_hasPreRendered)
-        {
-            _shouldRender = false;
-        }
-    }
-
     public async Task RefreshAsync()
     {
-        _shouldRender = true;
         if (OnRefresh != null)
             await OnRefresh.Invoke();
         await InvokeAsync(StateHasChanged);
