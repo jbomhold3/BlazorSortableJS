@@ -25,6 +25,7 @@
         animation = 150,
         ghostClass = "blue-background-class"
     };
+    
     private List<string> items = new List<string>
     {
         "Item 1-1",
